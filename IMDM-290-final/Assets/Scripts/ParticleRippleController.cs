@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class ParticleRippleController : MonoBehaviour
 {
+    public ParticleSystem ripple;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,4 +21,25 @@ public class ParticleRippleController : MonoBehaviour
     {
         //? anything else? 
     }
+
+    private void OnTriggerEnter()
+    {
+        //pasted from WandHandler (then edited)
+        Debug.Log(XRCharacterData.RightController.Grip);
+        if ((Input.GetKeyDown("space") || Input.GetButtonDown("Fire1")))
+        {
+            GameObject newProjectile = Instantiate(projectile, RHand.transform.position, RHand.transform.rotation);
+            Vector3 average = Vector3.Lerp(RHand.transform.forward, RHand.transform.up, rotationratio);
+            newProjectile.GetComponent<Rigidbody>().AddForce(average * projectileSpeed, ForceMode.Force);
+        }
+
+
+
+        ripple.transform.rotation = Quaternion.LookRotation(-hit.normal, transform.up);
+
+
+
+        ripple.Play();
+    }
 }
+
