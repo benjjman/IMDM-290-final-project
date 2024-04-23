@@ -6,40 +6,23 @@ using UnityEngine;
 public class ParticleRippleController : MonoBehaviour
 {
     public ParticleSystem ripple;
+    public GameObject player;   //to reference player's position 
+    public GameObject hit; //the star or planet or wtv that you hit
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void Update() //OnTriggerEnter()   //when star is hit 
     {
-        //initialize rotation/position perpendicular to the spot that was shot
-    }
-
-    //start at impact and stop at ~ 8-9 s (fade out for like ~1 sec so it's not abrupt)
-
-    // Update is called once per frame
-    void Update()
-    {
-        //? anything else? 
-    }
-
-    private void OnTriggerEnter()
-    {
-        //pasted from WandHandler (then edited)
-        Debug.Log(XRCharacterData.RightController.Grip);
-        if ((Input.GetKeyDown("space") || Input.GetButtonDown("Fire1")))
-        {
-            GameObject newProjectile = Instantiate(projectile, RHand.transform.position, RHand.transform.rotation);
-            Vector3 average = Vector3.Lerp(RHand.transform.forward, RHand.transform.up, rotationratio);
-            newProjectile.GetComponent<Rigidbody>().AddForce(average * projectileSpeed, ForceMode.Force);
+        if (Input.anyKey){
+            
+            //initialize rotation/position perpendicular to the spot that was shot
+            ripple.transform.position = hit.transform.position;
+            var direction = player.transform.position - ripple.transform.position;
+            // ? direction.y = 0;
+            var rotation = Quaternion.LookRotation(transform.position, direction);
+            //rotation.z = rotation.z * -1;
+            ripple.transform.rotation = rotation; 
+            ripple.Play();
         }
-
-
-
-        ripple.transform.rotation = Quaternion.LookRotation(-hit.normal, transform.up);
-
-
-
-        ripple.Play();
     }
 }
 
