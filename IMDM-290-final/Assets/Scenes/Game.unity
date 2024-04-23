@@ -5782,7 +5782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ripple: {fileID: 737238058}
-  player: {fileID: 1977106105}
+  player: {fileID: 8342454693599548131}
   hit: {fileID: 722978936}
 --- !u!1 &1486479923
 GameObject:
