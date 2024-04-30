@@ -5015,6 +5015,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce541aaee44044da8bcd1c30a4286007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ripple: {fileID: 7753583886347348019}
-  player: {fileID: 0}
-  hit: {fileID: 0}
