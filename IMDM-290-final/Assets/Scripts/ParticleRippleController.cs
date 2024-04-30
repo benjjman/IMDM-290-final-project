@@ -10,7 +10,7 @@ public class ParticleRippleController : MonoBehaviour
 
     void Start()    
     {
-        ripple.Stop();
+        //ripple.Stop();
     }
 
     void Update()   
@@ -29,7 +29,7 @@ public class ParticleRippleController : MonoBehaviour
         RippleReposition(hit, rippleClone);
         rippleClone.Play();
         yield return new WaitForSeconds(rippleClone.duration + 0.5f);
-        //rippleClone.Stop();
+        rippleClone.Stop();
     }
 
     private void RippleReposition(GameObject hit, ParticleSystem ripple)   
