@@ -820,6 +820,38 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1966906493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1041850871504029786, guid: 0508fe61d34bd4c72b23976018b8c4ed, type: 3}
+  m_PrefabInstance: {fileID: 3186763109649876489}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1966906496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966906493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cfc80b14645c4933a54d4b842716c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  sizeScale: 0.75
+  frequency: 3
+  amplitude: 10
+  rockAmount: 5
+  playerNear: {x: 0, y: 0, z: 1}
+  playerNearUL: 0.5
+  fadeAfter: 10
+  rocksList:
+  - {fileID: 29381833740492767, guid: 887f643c183b746f28b0a99e6bcef599, type: 3}
+  - {fileID: 3138595343725194655, guid: 41992dcaa02e04f5e99340389290bc86, type: 3}
+  - {fileID: 777588856895728083, guid: 4d6b8a502b3ee4944a24d9b5fe931fbc, type: 3}
+  - {fileID: 5289312792211756970, guid: 1cf2cfa09cad04e3f906f7dd4cdb65d3, type: 3}
+  - {fileID: 2350729281720959633, guid: 19c0b5b7bd11c49f7b7b4bd4ee454b0b, type: 3}
+  - {fileID: 8093048413558897296, guid: 6ea7d6817b46d4a699e68336775b3151, type: 3}
 --- !u!23 &66868836667389140
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1516,7 +1548,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1041850871504029786, guid: 0508fe61d34bd4c72b23976018b8c4ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1966906496}
   m_SourcePrefab: {fileID: 100100000, guid: 0508fe61d34bd4c72b23976018b8c4ed, type: 3}
 --- !u!1 &3222222033723838606
 GameObject:

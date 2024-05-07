@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
+using static UnityEngine.GraphicsBuffer;
 
 public class AsteroidController : MonoBehaviour
 {
@@ -22,44 +24,49 @@ public class AsteroidController : MonoBehaviour
     public float playerNearUL = 0.5f; //UL/upper limit
     public float fadeAfter = 10f;
 
-    public GameObject[] rocksAll;
     public List<GameObject> rocksList;
 
     void Start()
     {
-        rocksAll = Resources.LoadAll<GameObject>("ROCKSFOLDER");
-        //Important note: place your prefabs folder(or levels or whatever) 
-        //in a folder called "Resources" like this "Assets/Resources/FOLDERNAME"
 
-        //foreach (GameObject i in folderObjects)
-        //{
-        //    rocksList.Add(i);
-        //}
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        var rand = UnityEngine.Random.Range(0, 30);
+        var rand = UnityEngine.Random.Range(0, 100);    //every frame / how often rly ? 
         if (rand < rockAmount)
         {
-            //CreateRock();
-            StartCoroutine(Shoot());    //should start shoot movement And initialize rock?    
+            StartCoroutine(Shoot());      
         }
     }
 
     private IEnumerator Shoot()
     {
         GameObject nRock = CreateRock();
+        
         Vector3 startPos = nRock.transform.position;
-        GameObject projectile = Instantiate(nRock, startPos, nRock.transform.rotation);
+        playerNear = new Vector3(UnityEngine.Random.Range(0, playerNearUL), UnityEngine.Random.Range(0, playerNearUL), UnityEngine.Random.Range(0, playerNearUL));
+        var mX = startPos.x - playerNear.x;
+        var mY = startPos.y - playerNear.y;
 
-        playerNear = new Vector3 (UnityEngine.Random.Range(0, playerNearUL), UnityEngine.Random.Range(0, playerNearUL), UnityEngine.Random.Range(0, playerNearUL));
 
+        for(int i = 0;i<fadeAfter; i++)
+        {
+            -= 0.1f;
+            
+            yield return new WaitForEndOfFrame();
+        }
+
+
+
+
+        var randRotation = new Quaternion(1, 1, 1, 1);
+        GameObject projectile = Instantiate(nRock, startPos, randRotation);
+        
         Vector3 average = Vector3.Lerp(startPos, playerNear, 0.5f);
         projectile.GetComponent<Rigidbody>().AddForce(average * speed, ForceMode.Force);
-        StartCoroutine(FadeIn(projectile));
+        //StartCoroutine(FadeIn(projectile));
 
         yield return new WaitForSeconds(fadeAfter);
         StartCoroutine(FadeOut(projectile));
@@ -67,8 +74,9 @@ public class AsteroidController : MonoBehaviour
 
     private IEnumerator FadeOut(GameObject obj)
     {
+        yield return new WaitForSeconds(fadeAfter);
         MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
-        Color colour = meshRenderer.materials[0].color;
+        UnityEngine.Color colour = meshRenderer.materials[0].color;
 
         while (colour.a > 0)
         {
@@ -83,7 +91,7 @@ public class AsteroidController : MonoBehaviour
     private IEnumerator FadeIn(GameObject obj)
     {
         MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
-        Color colour = meshRenderer.materials[0].color;
+        UnityEngine.Color colour = meshRenderer.materials[0].color;
 
         while (colour.a < 1)
         {
@@ -97,7 +105,7 @@ public class AsteroidController : MonoBehaviour
     private GameObject CreateRock()     //randomizes size and start location
     {
         float size = sizeScale * UnityEngine.Random.Range((float).7, 1); //random range determines how much size variation there will be
-        GameObject newRock = rocksAll[UnityEngine.Random.Range(0, rocksAll.Length)];    //pick random rock from folder
+        GameObject newRock = rocksList[UnityEngine.Random.Range(0, rocksList.Count)];    //pick random rock from folder
         newRock.transform.localScale.Set(size, size, size);
 
         float x = Mathf.Cos(Time.time * frequency) * amplitude;
